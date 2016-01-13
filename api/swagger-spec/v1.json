@@ -13497,6 +13497,30 @@
      "unschedulable": {
       "type": "boolean",
       "description": "Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: http://releases.k8s.io/HEAD/docs/admin/node.md#manual-node-administration\"`"
+     },
+     "hardTaints": {
+      "type": "array",
+      "items": {
+       "$ref": "v1.Taint"
+      }
+     }
+    }
+   },
+   "v1.Taint": {
+    "id": "v1.Taint",
+    "required": [
+     "key",
+     "effect"
+    ],
+    "properties": {
+     "key": {
+      "type": "string"
+     },
+     "value": {
+      "type": "string"
+     },
+     "effect": {
+      "type": "string"
      }
     }
    },
@@ -13537,6 +13561,12 @@
      "nodeInfo": {
       "$ref": "v1.NodeSystemInfo",
       "description": "Set of ids/uuids to uniquely identify the node. More info: http://releases.k8s.io/HEAD/docs/admin/node.md#node-info"
+     },
+     "hardTaints": {
+      "type": "array",
+      "items": {
+       "$ref": "v1.Taint"
+      }
      }
     }
    },
@@ -14387,6 +14417,12 @@
        "$ref": "v1.LocalObjectReference"
       },
       "description": "ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: http://releases.k8s.io/HEAD/docs/user-guide/images.md#specifying-imagepullsecrets-on-a-pod"
+     },
+     "tolerations": {
+      "type": "array",
+      "items": {
+       "$ref": "v1.Toleration"
+      }
      }
     }
    },
@@ -14996,6 +15032,28 @@
    "integer": {
     "id": "integer",
     "properties": {}
+   },
+   "v1.Toleration": {
+    "id": "v1.Toleration",
+    "required": [
+     "key",
+     "operator",
+     "effect"
+    ],
+    "properties": {
+     "key": {
+      "type": "string"
+     },
+     "operator": {
+      "type": "string"
+     },
+     "value": {
+      "type": "string"
+     },
+     "effect": {
+      "type": "string"
+     }
+    }
    },
    "v1.PodStatus": {
     "id": "v1.PodStatus",
