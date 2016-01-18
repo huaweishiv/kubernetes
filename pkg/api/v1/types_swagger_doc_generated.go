@@ -717,6 +717,7 @@ var map_NodeSpec = map[string]string{
 	"externalID":    "External ID of the node assigned by some machine database (e.g. a cloud provider). Deprecated.",
 	"providerID":    "ID of the node assigned by the cloud provider in the format: <ProviderName>://<ProviderSpecificNodeID>",
 	"unschedulable": "Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: http://releases.k8s.io/HEAD/docs/admin/node.md#manual-node-administration\"`",
+	"hardTaints":    "similarly this is tst element added to the NodeSpec dumil",
 }
 
 func (NodeSpec) SwaggerDoc() map[string]string {
@@ -1033,6 +1034,7 @@ var map_PodSpec = map[string]string{
 	"hostIPC":                       "Use the host's ipc namespace. Optional: Default to false.",
 	"securityContext":               "SecurityContext holds pod-level security attributes and common container settings. Optional: Defaults to empty.  See type description for default values of each field.",
 	"imagePullSecrets":              "ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. For example, in the case of docker, only DockerConfig type secrets are honored. More info: http://releases.k8s.io/HEAD/docs/user-guide/images.md#specifying-imagepullsecrets-on-a-pod",
+	"tolerations":                   "This is just a dummy test to see if the code works. that is it",
 }
 
 func (PodSpec) SwaggerDoc() map[string]string {
@@ -1378,6 +1380,23 @@ var map_TCPSocketAction = map[string]string{
 
 func (TCPSocketAction) SwaggerDoc() map[string]string {
 	return map_TCPSocketAction
+}
+
+var map_Taint = map[string]string{
+	"": "The node this Taint is attached to has the effect \"effect\" on any pod that that does not tolerate the Taint.",
+}
+
+func (Taint) SwaggerDoc() map[string]string {
+	return map_Taint
+}
+
+var map_Toleration = map[string]string{
+	"":         "The pod this Toleration is attached to tolerates any taint that matches the triple <key,value,effect> using the matching operator <operator>.",
+	"operator": "operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category.",
+}
+
+func (Toleration) SwaggerDoc() map[string]string {
+	return map_Toleration
 }
 
 var map_Volume = map[string]string{

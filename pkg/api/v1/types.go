@@ -1251,6 +1251,59 @@ const (
 	DefaultTerminationGracePeriodSeconds = 30
 )
 
+// The node this Taint is attached to has the effect "effect" on
+// any pod that that does not tolerate the Taint.
+type Taint struct {
+	Key    string      `json:"key" patchStrategy:"merge" patchMergeKey:"key"`
+	Value  string      `json:"value,omitempty"`
+	Effect TaintEffect `json:"effect"`
+}
+
+type TaintEffect string
+
+const (
+	// Do not allow new pods to schedule unless they tolerate the taint,
+	// but allow all pods submitted to Kubelet without going through the scheduler
+	// to start, and allow all already-running pods to continue running.
+	// Enforced by the scheduler.
+	TaintEffectNoSchedule TaintEffect = "NoSchedule"
+	// Like TaintEffectNoSchedule, but the scheduler tries not to schedule
+	// new pods onto the node, rather than prohibiting new pods from scheduling
+	// onto the node. Enforced by the scheduler.
+	TaintEffectPreferNoSchedule TaintEffect = "PreferNoSchedule"
+	// Do not allow new pods to schedule unless they tolerate the taint,
+	// do not allow pods to start on Kubelet unless they tolerate the taint,
+	// but allow all already-running pods to continue running.
+	// Enforced by the scheduler and Kubelet.
+	TaintEffectNoScheduleNoAdmit TaintEffect = "NoScheduleNoAdmit"
+	// Do not allow new pods to schedule unless they tolerate the taint,
+	// do not allow pods to start on Kubelet unless they tolerate the taint,
+	// and evict any already-running pods that do not tolerate the taint.
+	// Enforced by the scheduler and Kubelet.
+	TaintEffectNoScheduleNoAdmitNoExecute = "NoScheduleNoAdmitNoExecute"
+)
+
+// The pod this Toleration is attached to tolerates any taint that matches
+// the triple <key,value,effect> using the matching operator <operator>.
+type Toleration struct {
+	Key string `json:"key" patchStrategy:"merge" patchMergeKey:"key"`
+	// operator represents a key's relationship to the value.
+	// Valid operators are Exists and Equal. Defaults to Equal.
+	// Exists is equivalent to wildcard for value, so that a pod can
+	// tolerate all taints of a particular category.
+	Operator TolerationOperator `json:"operator"`
+	Value    string             `json:"value,omitempty"`
+	Effect   TaintEffect        `json:"effect"`
+}
+
+// A toleration operator is the set of operators that can be used in a toleration.
+type TolerationOperator string
+
+const (
+	TolerationOpExists TolerationOperator = "Exists"
+	TolerationOpEqual  TolerationOperator = "Equal"
+)
+
 // PodSpec is a description of a pod.
 type PodSpec struct {
 	// List of volumes that can be mounted by containers belonging to the pod.
@@ -2665,57 +2718,4 @@ type RangeAllocation struct {
 const (
 	// "default-scheduler" is the name of default scheduler.
 	DefaultSchedulerName = "default-scheduler"
-)
-
-// The node this Taint is attached to has the effect "effect" on
-// any pod that that does not tolerate the Taint.
-type Taint struct {
-	Key    string      `json:"key" patchStrategy:"merge" patchMergeKey:"key"`
-	Value  string      `json:"value,omitempty"`
-	Effect TaintEffect `json:"effect"`
-}
-
-type TaintEffect string
-
-const (
-	// Do not allow new pods to schedule unless they tolerate the taint,
-	// but allow all pods submitted to Kubelet without going through the scheduler
-	// to start, and allow all already-running pods to continue running.
-	// Enforced by the scheduler.
-	TaintEffectNoSchedule TaintEffect = "NoSchedule"
-	// Like TaintEffectNoSchedule, but the scheduler tries not to schedule
-	// new pods onto the node, rather than prohibiting new pods from scheduling
-	// onto the node. Enforced by the scheduler.
-	TaintEffectPreferNoSchedule TaintEffect = "PreferNoSchedule"
-	// Do not allow new pods to schedule unless they tolerate the taint,
-	// do not allow pods to start on Kubelet unless they tolerate the taint,
-	// but allow all already-running pods to continue running.
-	// Enforced by the scheduler and Kubelet.
-	TaintEffectNoScheduleNoAdmit TaintEffect = "NoScheduleNoAdmit"
-	// Do not allow new pods to schedule unless they tolerate the taint,
-	// do not allow pods to start on Kubelet unless they tolerate the taint,
-	// and evict any already-running pods that do not tolerate the taint.
-	// Enforced by the scheduler and Kubelet.
-	TaintEffectNoScheduleNoAdmitNoExecute = "NoScheduleNoAdmitNoExecute"
-)
-
-// The pod this Toleration is attached to tolerates any taint that matches
-// the triple <key,value,effect> using the matching operator <operator>.
-type Toleration struct {
-	Key string `json:"key" patchStrategy:"merge" patchMergeKey:"key"`
-	// operator represents a key's relationship to the value.
-	// Valid operators are Exists and Equal. Defaults to Equal.
-	// Exists is equivalent to wildcard for value, so that a pod can
-	// tolerate all taints of a particular category.
-	Operator TolerationOperator `json:"operator"`
-	Value    string             `json:"value,omitempty"`
-	Effect   TaintEffect        `json:"effect"`
-}
-
-// A toleration operator is the set of operators that can be used in a toleration.
-type TolerationOperator string
-
-const (
-	TolerationOpExists TolerationOperator = "Exists"
-	TolerationOpEqual  TolerationOperator = "Equal"
 )

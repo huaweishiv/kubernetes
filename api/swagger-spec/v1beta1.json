@@ -3376,7 +3376,8 @@
       "type": "array",
       "items": {
        "$ref": "v1.Toleration"
-      }
+      },
+      "description": "This is just a dummy test to see if the code works. that is it"
      }
     }
    },
@@ -4336,6 +4337,7 @@
    },
    "v1.Toleration": {
     "id": "v1.Toleration",
+    "description": "The pod this Toleration is attached to tolerates any taint that matches the triple \u003ckey,value,effect\u003e using the matching operator \u003coperator\u003e.",
     "required": [
      "key",
      "operator",
@@ -4346,7 +4348,8 @@
       "type": "string"
      },
      "operator": {
-      "type": "string"
+      "type": "string",
+      "description": "operator represents a key's relationship to the value. Valid operators are Exists and Equal. Defaults to Equal. Exists is equivalent to wildcard for value, so that a pod can tolerate all taints of a particular category."
      },
      "value": {
       "type": "string"
